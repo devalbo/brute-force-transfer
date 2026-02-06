@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+.venv*
+.ENV/
+.env/
+*.egg
+
+# Build artifacts
+build/
+dist/
+
+# Test / tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.tox/
+
+# OS
+.DS_Store
+
+# Project outputs
+json64.json
+
+# Misc
+node_modules/

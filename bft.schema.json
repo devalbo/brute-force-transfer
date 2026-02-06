@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brute-force-transfer.schema.json",
+  "title": "Brute-Force Transfer Schema",
+  "type": [
+    "object"
+  ],
+  "$defs": {
+    "binary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "encoding",
+        "content"
+      ],
+      "properties": {
+        "type": { "const": "binary" },
+        "encoding": {
+          "const": "base64"
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "content"
+      ],
+      "properties": {
+        "type": { "const": "text" },
+        "content": { "type": "string" }
+      }
+    },
+    "directory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "entries"
+      ],
+      "properties": {
+        "type": { "const": "directory" },
+        "entries": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/node" }
+        }
+      }
+    },
+    "comment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "content",
+        "node"
+      ],
+      "properties": {
+        "type": { "const": "comment" },
+        "content": { "type": "string" },
+        "node": { "$ref": "#/$defs/node" }
+      }
+    },
+    "node": {
+      "oneOf": [
+        { "$ref": "#/$defs/text" },
+        { "$ref": "#/$defs/binary" },
+        { "$ref": "#/$defs/directory" },
+        { "$ref": "#/$defs/comment" }
+      ]
+    }
+  },
+  "$ref": "#/$defs/node"
+}

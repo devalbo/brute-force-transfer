@@ -1,0 +1,8 @@
+# a format based on .gitignore file/directory ignoring patterns
+bft.json
+.DS_Store
+.git
+.gitignore
+.venv
+__pycache__
+.node_modules
