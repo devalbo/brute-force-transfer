@@ -49,7 +49,7 @@ The decoder ignores `comment` when writing to disk.
 ### Expectations
 
 - Inputs must match `brute-force-transfer.schema.json`. Validation happens on both encode and decode.
-- The encoder determines text files by UTF-8 decodeability (rejects null bytes).
+- The encoder determines text files by UTF-8 decodability (rejects null bytes).
 - Directory entries are ordered by name when encoded.
 - Comment fields are preserved in JSON and ignored when writing to disk.
 
@@ -81,15 +81,15 @@ python -m unittest -v
 
 ### Bootstrapping `bft.py` from (mostly) Scratch
 
-These steps assume you have a copy of [`bfg.json`](./bft.json) on your system and a "modern" version of Python.
+These steps assume you have a copy of [`bft.json`](./bft.json) on your system and a "modern" version of Python.
 
-Take the contents of [`inflate_bft_py.py`](./inflate_bfg_py.py) and enter it into a file called `inflate_bfg_py.py` somehow. This file must be in the same directory as your copy of `bfg.json`.
+Take the contents of [`inflate_bft_py.py`](./inflate_bft_py.py) and enter it into a file called `inflate_bft_py.py` somehow. This file must be in the same directory as your copy of `bft.json`.
 
-Then, run the command `python inflate_bfg_py.py`. This will find the `bft.py` Python file and extract its contents to `bft.py`. 
+Then, run the command `python inflate_bft_py.py`. This will find the `bft.py` Python file and extract its contents to `bft.py`. 
 
 Once you have `bft.py` on your system, run `python bft.py decode bft.json bft` and it will recreate this directory on your system in the `bft` subdirectory.
 
 
 ## Packaging `bft.json` for bft transfer
 
-Run [`deflate_bft_py.py](./deflate_bft_py.py). It will take the contents of its directory (minus the files deliberately excluded in its `IGNORE_NAMES` field) and write it to [`bft.json`](./bft.json).
+Run [`deflate_bft_py.py`](./deflate_bft_py.py). It will take the contents of its directory (minus the files deliberately excluded in its `IGNORE_NAMES` field) and write it to [`bft.json`](./bft.json).
