@@ -4,22 +4,23 @@ The goal of the *brute-force-transfer (BFT)* project is to provide the benefits 
 
 ## Format
 
-Each node is one of the following:
+Each node is one of the following, and may include an optional `comment` string:
 
 - **Directory**
   - Required: `type: "directory"`, `entries`
+  - Optional: `comment`
   - `entries` is a JSON object mapping names to child nodes
 - **Text file**
   - Required: `type: "text"`, `content`
+  - Optional: `comment`
   - `content` is a UTF-8 string (JSON escaping only)
 - **Binary file**
   - Required: `type: "binary"`, `encoding`, `content`
+  - Optional: `comment`
   - `encoding` is currently `"base64"`
   - `content` is base64 text
-- **Comment field**
-  - Optional: `comment`
-  - `comment` is a note attached to the file or directory node
-  - The decoder ignores the comment when writing to disk
+
+The decoder ignores `comment` when writing to disk.
 
 ### Example
 
