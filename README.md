@@ -16,11 +16,10 @@ Each node is one of the following:
   - Required: `type: "binary"`, `encoding`, `content`
   - `encoding` is currently `"base64"`
   - `content` is base64 text
-- **Comment wrapper**
-  - Required: `type: "comment"`, `content`, `node`
-  - `content` is a note about the wrapped item
-  - `node` is the real node being commented on
-  - The decoder ignores the comment and writes the wrapped `node` to disk
+- **Comment field**
+  - Optional: `comment`
+  - `comment` is a note attached to the file or directory node
+  - The decoder ignores the comment when writing to disk
 
 ### Example
 
@@ -30,7 +29,7 @@ Each node is one of the following:
   "entries": {
     "README.txt": {
       "type": "text",
-      "content": "Hello JSON64\n"
+      "content": "Hello Brute Force Transfer!\n"
     },
     "data.bin": {
       "type": "binary",
@@ -38,12 +37,9 @@ Each node is one of the following:
       "content": "AAECAwQF"
     },
     "notes.txt": {
-      "type": "comment",
-      "content": "This is a note about notes.txt.",
-      "node": {
-        "type": "text",
-        "content": "Nested file.\n"
-      }
+      "type": "text",
+      "content": "Nested file.\n",
+      "comment": "This is a note about notes.txt."
     }
   }
 }
@@ -51,14 +47,14 @@ Each node is one of the following:
 
 ### Expectations
 
-- Inputs must match `json64.schema.json`. Validation happens on both encode and decode.
+- Inputs must match `brute-force-transfer.schema.json`. Validation happens on both encode and decode.
 - The encoder determines text files by UTF-8 decodeability (rejects null bytes).
 - Directory entries are ordered by name when encoded.
-- Comment nodes are preserved in JSON and ignored when writing to disk.
+- Comment fields are preserved in JSON and ignored when writing to disk.
 
 
 ## Python
-`bft.py` encodes a directory into a JSON structure and decodes it back. The format is explicit: every node includes a `type` and follows the JSON Schema in `json64.schema.json`.
+`bft.py` encodes a directory into a JSON structure and decodes it back. The format is explicit: every node includes a `type` and follows the JSON Schema in `brute-force-transfer.schema.json`.
 
 
 ### Bootstrapping `bft.py` from (mostly) Scratch
@@ -69,18 +65,10 @@ Take the contents of [`inflate_bft_py.py`](./inflate_bfg_py.py) and enter it int
 
 Then, run the command `python inflate_bfg_py.py`. This will find the `bft.py` Python file and extract its contents to `bft.py`. 
 
-Once you have `bft.py` on your system, run `python bft.py bft.json` and it will recreate this directory on your system.
+Once you have `bft.py` on your system, run `python bft.py decode bft.json bft` and it will recreate this directory on your system in the `bft` subdirectory.
 
 
 ## Packaging `bft.json` for bft transfer
 
 Run [`deflate_bft_py.py](./deflate_bft_py.py). It will take the contents of its directory (minus the files deliberately excluded in its `IGNORE_NAMES` field) and 
-
-<!-- 
-
-```bash
-python json64.py encode path/to/dir -o out.json
-python json64.py decode out.json path/to/output_dir
-``` -->
-
 

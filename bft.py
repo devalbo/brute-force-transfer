@@ -30,7 +30,7 @@ def parse_ignore_names_from_file(ignore_file: Path) -> Iterable[str]:
     if not ignore_file.exists() or not ignore_file.is_file():
         raise FileNotFoundError(f"Ignore file not found: {ignore_file}")
     return parse_ignore_names(ignore_file.read_text(encoding="utf-8"))
-    
+
 
 def is_text_bytes(data: bytes) -> bool:
     if not data:
@@ -98,18 +98,11 @@ def decode_node(node: Any, dest: Path) -> None:
             decode_node(child, dest / name)
         return
 
-    if node_type == "comment":
-        inner = node.get("node")
-        if inner is None:
-            raise ValueError(f"Comment node missing inner node at {dest}")
-        decode_node(inner, dest)
-        return
-
     raise ValueError(f"Unsupported node type at {dest}: {node_type}")
 
 
 def load_schema() -> Dict[str, Any]:
-    schema_path = Path(__file__).with_name("json64.schema.json")
+    schema_path = Path(__file__).with_name("brute-force-transfer.schema.json")
     if not schema_path.exists():
         raise FileNotFoundError(f"Schema file not found: {schema_path}")
     return json.loads(schema_path.read_text(encoding="utf-8"))
@@ -141,7 +134,7 @@ def encode_command(src_dir: Path, output: Path | None, peer_output: bool) -> Non
     text = json.dumps(payload, ensure_ascii=False, indent=2)
 
     if output is None and peer_output:
-        output = src_dir.parent / f"{src_dir.name}.json64"
+        output = src_dir.parent / f"{src_dir.name}.bft"
 
     if output is None:
         print(text)
@@ -176,7 +169,7 @@ def build_parser() -> argparse.ArgumentParser:
         "-d",
         "--peer-output",
         action="store_true",
-        help="Write output as a peer to the source directory (name.json64)",
+        help="Write output as a peer to the source directory (name.bft.json)",
     )
 
     decode_parser = subparsers.add_parser("decode", help="Decode JSON into a directory")

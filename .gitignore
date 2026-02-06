@@ -24,8 +24,5 @@ dist/
 # OS
 .DS_Store
 
-# Project outputs
-json64.json
-
 # Misc
 node_modules/

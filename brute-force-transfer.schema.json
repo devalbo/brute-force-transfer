@@ -21,7 +21,8 @@
         },
         "content": {
           "type": "string"
-        }
+        },
+        "comment": { "type": "string" }
       }
     },
     "text": {
@@ -33,7 +34,8 @@
       ],
       "properties": {
         "type": { "const": "text" },
-        "content": { "type": "string" }
+        "content": { "type": "string" },
+        "comment": { "type": "string" }
       }
     },
     "directory": {
@@ -48,29 +50,15 @@
         "entries": {
           "type": "object",
           "additionalProperties": { "$ref": "#/$defs/node" }
-        }
-      }
-    },
-    "comment": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "type",
-        "content",
-        "node"
-      ],
-      "properties": {
-        "type": { "const": "comment" },
-        "content": { "type": "string" },
-        "node": { "$ref": "#/$defs/node" }
+        },
+        "comment": { "type": "string" }
       }
     },
     "node": {
       "oneOf": [
         { "$ref": "#/$defs/text" },
         { "$ref": "#/$defs/binary" },
-        { "$ref": "#/$defs/directory" },
-        { "$ref": "#/$defs/comment" }
+        { "$ref": "#/$defs/directory" }
       ]
     }
   },
