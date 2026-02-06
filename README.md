@@ -70,5 +70,5 @@ Once you have `bft.py` on your system, run `python bft.py decode bft.json bft` a
 
 ## Packaging `bft.json` for bft transfer
 
-Run [`deflate_bft_py.py](./deflate_bft_py.py). It will take the contents of its directory (minus the files deliberately excluded in its `IGNORE_NAMES` field) and 
+Run [`deflate_bft_py.py](./deflate_bft_py.py). It will take the contents of its directory (minus the files deliberately excluded in its `IGNORE_NAMES` field) and write it to [`bft.json`](./bft.json).
 
