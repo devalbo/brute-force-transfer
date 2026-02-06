@@ -1,6 +1,6 @@
 # brute-force-transfer
 
-The goal of the *brute-force-transfer (BFT)* project is to provide the benefits of a zip file (packaging a directory structure into a single file) using a single JSON/text file format instead of a binary blob of bytes leveraging existing programmatic runtimes (e.g. Python or Node).
+The goal of the *brute-force-transfer (BFT)* project is to provide the benefits of a zip file (packaging a directory structure into a single file) using a single JSON/text file format instead of a binary blob of bytes leveraging existing programmatic runtimes (e.g. Python or Node). This way, you can transmit a JSON file as text instead of a binary blob and turn it into a directory elsewhere.
 
 ## Format
 
@@ -56,6 +56,27 @@ Each node is one of the following:
 ## Python
 `bft.py` encodes a directory into a JSON structure and decodes it back. The format is explicit: every node includes a `type` and follows the JSON Schema in `brute-force-transfer.schema.json`.
 
+### Optional: strict schema validation
+
+`bft.py` will validate against the JSON schema if `jsonschema` is installed.
+
+To set up a local virtual environment (not required!):
+
+```bash
+python -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+If `jsonschema` is not installed, `bft.py` will warn and skip validation.
+
+To run tests inside the venv:
+
+```bash
+. .venv/bin/activate
+python -m unittest -v
+```
+
 
 ### Bootstrapping `bft.py` from (mostly) Scratch
 
@@ -71,4 +92,3 @@ Once you have `bft.py` on your system, run `python bft.py decode bft.json bft` a
 ## Packaging `bft.json` for bft transfer
 
 Run [`deflate_bft_py.py](./deflate_bft_py.py). It will take the contents of its directory (minus the files deliberately excluded in its `IGNORE_NAMES` field) and write it to [`bft.json`](./bft.json).
-

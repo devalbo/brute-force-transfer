@@ -47,13 +47,17 @@ class TestBFT(unittest.TestCase):
             self.assertEqual((dest / "note.txt").read_text(encoding="utf-8"), "Hello\n")
 
     def test_schema_rejects_unknown_type(self) -> None:
+        if bft.Draft202012Validator is None:
+            self.skipTest("jsonschema not installed")
         schema = bft.load_schema()
         bad = {"type": "unknown", "content": "nope"}
         with self.assertRaises(ValueError):
             bft.validate_payload(bad, schema)
 
     def test_sample_json_matches_schema(self) -> None:
-        sample_path = Path(__file__).with_name("sample_bft.json")
+        if bft.Draft202012Validator is None:
+            self.skipTest("jsonschema not installed")
+        sample_path = Path(__file__).with_name("bft.json")
         data = json.loads(sample_path.read_text(encoding="utf-8"))
         schema = bft.load_schema()
         bft.validate_payload(data, schema)
